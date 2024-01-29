@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import reportWebVitals from "./reportWebVitals";
 import AppRouter from "./Router";
@@ -7,7 +8,9 @@ import AppRouter from "./Router";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AppRouter />
+    <ChakraProvider>
+      <AppRouter />
+    </ChakraProvider>
   </React.StrictMode>
 );
 
