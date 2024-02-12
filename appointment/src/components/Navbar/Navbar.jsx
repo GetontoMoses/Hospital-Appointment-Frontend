@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -16,6 +17,7 @@ import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 
 export default function Navbar() {
+  const navigate = useNavigate(); 
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -75,7 +77,7 @@ export default function Navbar() {
             Sign In
           </Button>
           <Button
-            as={"a"}
+          onClick={() => navigate(`/signup`)}
             display={{ base: "none", md: "inline-flex" }}
             fontSize={"sm"}
             fontWeight={600}
