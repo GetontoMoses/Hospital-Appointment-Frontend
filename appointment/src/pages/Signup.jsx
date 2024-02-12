@@ -14,12 +14,16 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
+import GetDept from "../helpers/GetDept";
 export default function Signup() {
   const toast = useToast();
   const [values, setValues] = useState({
-    username: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    password: "",
+    phoneNumber: "",
+    staffId: "",
+    Departmnet: "",
   });
 
   function handleChange(event) {
@@ -29,19 +33,36 @@ export default function Signup() {
       [name]: value,
     }));
   }
+  function handleDepartmentChange(department) {
+    setValues((prev) => ({
+      ...prev,
+      Department: department,
+    }));
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
-    const { username, email, password } = values;
+    const {
+      FirstName,
+      LastName,
+      email,
+      PhoneNumber,
+      Doctor_StaffID,
+      Departmnet,
+    } = values;
     try {
-      const res = await fetch("http://127.0.0.1:8000/items/user-register/", {
+      const res = await fetch("http://127.0.0.1:8000/doctor/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username,
+          FirstName,
+          LastName,
           email,
-          password,
+          PhoneNumber,
+          Doctor_StaffID,
+          Departmnet,
         }),
       });
       console.log(res);
@@ -85,24 +106,45 @@ export default function Signup() {
         </Stack>
         <Box
           rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
+          bg={useColorModeValue("#002B56", "gray.700")}
           boxShadow={"lg"}
           p={8}
         >
-          <Stack spacing={4}>
-            <FormControl id="name">
-              <FormLabel>Username</FormLabel>
-
-              <Input onChange={handleChange} name="username" type="text" />
+          <Stack color={"#FFFFFF"} spacing={1}>
+            <FormControl id="firstName">
+              <FormLabel>First Name</FormLabel>
+              <Input onChange={handleChange} name="FirstName" type="text" />
             </FormControl>
+
+            <Flex>
+              <FormControl id="lastName">
+                <FormLabel>Last Name</FormLabel>
+
+                <Input onChange={handleChange} name="LastName" type="text" />
+              </FormControl>
+            </Flex>
+
             <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>Email</FormLabel>
               <Input onChange={handleChange} name="email" type="email" />
             </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input onChange={handleChange} name="password" type="password" />
+            <FormControl id="PhoneNumber">
+              <FormLabel>Phone Number</FormLabel>
+              <Input onChange={handleChange} name="PhoneNumber" type="tel" />
             </FormControl>
+            <FormControl id="staffId">
+              <FormLabel>Doctor StaffID</FormLabel>
+              <Input
+                onChange={handleChange}
+                name="Doctor_StaffID"
+                type="staffId"
+              />
+            </FormControl>
+            <FormControl id="department">
+              <FormLabel>Department</FormLabel>
+              <GetDept onSelectDepartment={handleDepartmentChange} />
+            </FormControl>
+
             <Stack spacing={10}>
               <Stack
                 direction={{ base: "column", sm: "row" }}
